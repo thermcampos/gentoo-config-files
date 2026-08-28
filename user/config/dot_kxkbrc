@@ -1,0 +1,8 @@
+[Layout]
+DisplayNames=,
+LayoutList=br,us
+Model=pc104
+Options=compose:rctrl
+ResetOldOptions=true
+Use=true
+VariantList=,

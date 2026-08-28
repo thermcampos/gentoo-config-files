@@ -1,0 +1,21 @@
+#!/bin/sh
+
+rescue_shell() {
+  echo "Something went wrong v3. Dropping to a shell."
+  exec /bin/sh
+}
+
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs none /dev
+mkdir -p /run/cryptsetup
+export DM_DISABLE_UDEV=1
+
+ROOT=$(sed -n 's/.*\broot=\([^ ]*\).*/\1/p' /proc/cmdline)
+
+cryptsetup luksOpen /dev/nvme0n1p3 gentoo_root || rescue_shell
+lvm vgchange -ay || rescue_shell
+
+mount -o ro "$ROOT" /mnt/root || rescue_shell
+
+exec switch_root /mnt/root /sbin/init

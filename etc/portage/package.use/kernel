@@ -1,0 +1,4 @@
+sys-kernel/installkernel -systemd grub -dracut -uki -efistub -refind
+sys-kernel/gentoo-sources symlink
+app-admin/sysklogd logrotate -logger
+

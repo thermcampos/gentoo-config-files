@@ -1,0 +1,6 @@
+bin/
+sbin/
+lib/
+lib64/
+usr/
+*.img
