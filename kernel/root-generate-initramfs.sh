@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KERNEL="7.2.2-gentoo"
+KERNEL="7.2.3-gentoo"
 
 cd /usr/src/initramfs
 

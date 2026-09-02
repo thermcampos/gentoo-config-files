@@ -9,6 +9,7 @@ app-editors/vim
 app-editors/vim-core
 app-editors/vscodium
 app-i18n/ibus
+app-misc/cmatrix
 app-misc/evtest
 app-misc/jq
 app-pda/ifuse
@@ -46,11 +47,13 @@ sys-apps/busybox
 sys-apps/mlocate
 sys-apps/usbutils
 sys-auth/polkit
+sys-cluster/kubectl
 sys-firmware/intel-microcode
 sys-kernel/gentoo-sources
 sys-kernel/installkernel
 sys-kernel/linux-firmware
 www-client/google-chrome
+www-client/microsoft-edge
 x11-apps/mesa-progs
 x11-apps/xev
 x11-terms/ghostty
