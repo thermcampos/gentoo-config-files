@@ -12,6 +12,8 @@ app-i18n/ibus
 app-misc/cmatrix
 app-misc/evtest
 app-misc/jq
+app-misc/neofetch
+app-misc/resolve-march-native
 app-pda/ifuse
 app-pda/usbmuxd
 app-portage/cfg-update
@@ -20,6 +22,7 @@ app-portage/mirrorselect
 app-shells/bash-completion
 app-text/dos2unix
 app-text/pastebinit
+app-text/tree
 dev-db/dbeaver-bin
 dev-java/icedtea-web
 dev-java/openjdk-bin:21
@@ -28,6 +31,7 @@ dev-util/intellij-idea
 dev-util/pahole
 dev-util/xxdiff
 dev-vcs/git
+kde-apps/gwenview
 kde-apps/kdeadmin-meta
 kde-apps/kdeutils-meta
 kde-plasma/discover
@@ -35,6 +39,7 @@ kde-plasma/plasma-meta
 media-gfx/gimp
 media-libs/libv4l
 media-libs/mesa
+media-sound/alsa-utils
 media-sound/pavucontrol
 net-analyzer/netselect
 net-im/discord
@@ -46,13 +51,16 @@ net-wireless/iw
 sys-apps/busybox
 sys-apps/mlocate
 sys-apps/usbutils
+sys-apps/yarn
 sys-auth/polkit
 sys-cluster/kubectl
 sys-firmware/intel-microcode
 sys-kernel/gentoo-sources
 sys-kernel/installkernel
 sys-kernel/linux-firmware
+www-client/firefox-bin
 www-client/google-chrome
+www-client/google-chrome-unstable
 www-client/microsoft-edge
 x11-apps/mesa-progs
 x11-apps/xev
