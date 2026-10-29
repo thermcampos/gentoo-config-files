@@ -1,0 +1,79 @@
+#!/sbin/nft -f
+# Inbound default-drop for an untrusted-network laptop.
+# Tags pings, probes and scans to netlink log group 1 for ulogd.
+flush ruleset
+
+table inet host {
+    # Sources that crossed the scan threshold: dropped silently for 10 minutes
+    # so one scan produces one alert, not thousands.
+    set scanners4 { type ipv4_addr; flags dynamic, timeout; timeout 10m; }
+    set scanners6 { type ipv6_addr; flags dynamic, timeout; timeout 10m; }
+
+    # Per-source rate meters for unsolicited new packets.
+    set rate4 { type ipv4_addr; flags dynamic, timeout; timeout 1m; }
+    set rate6 { type ipv6_addr; flags dynamic, timeout; timeout 1m; }
+
+    chain input {
+        type filter hook input priority filter; policy drop;
+
+        iif "lo" accept
+
+        # Stealth-scan flag combinations no real TCP stack sends. Checked before
+        # the conntrack 'invalid' drop, which would otherwise swallow them unlabeled.
+        tcp flags & (fin|syn|rst|psh|ack|urg) == 0x0 jump stealth   # NULL scan
+        tcp flags & (fin|ack) == fin jump stealth                    # FIN / XMAS
+        tcp flags & (syn|fin) == syn|fin jump stealth
+        tcp flags & (syn|rst) == syn|rst jump stealth
+
+        ct state invalid drop
+        ct state established,related accept
+
+        # IPv6 breaks without these: neighbour discovery, router adverts,
+        # path-MTU discovery. Hop limit 255 proves NDP came from the local link.
+        icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem } accept
+        icmpv6 type { nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } ip6 hoplimit 255 accept
+        icmpv6 type mld-listener-query ip6 saddr fe80::/10 accept
+        icmp type { destination-unreachable, time-exceeded, parameter-problem } accept
+
+        # Pings (including multicast ff02::1 sweeps, a real v6 discovery trick).
+        icmp type echo-request jump ping
+        icmpv6 type echo-request jump ping
+
+        # DHCP replies.
+        udp sport 67 udp dport 68 accept
+        ip6 saddr fe80::/10 udp sport 547 udp dport 546 accept
+
+        # Broadcast/multicast chatter (mDNS, SSDP, NetBIOS) is noise, not probing.
+        meta pkttype { broadcast, multicast } drop
+
+        # Anything left is someone deliberately knocking on you.
+        jump probe
+    }
+
+    chain probe {
+        ip  saddr @scanners4 drop
+        ip6 saddr @scanners6 drop
+
+        # More than 5 unsolicited packets/second (burst 10) from one source = a scan.
+        update @rate4 { ip saddr limit rate over 5/second burst 10 packets } add @scanners4 { ip saddr } log group 1 prefix "NETALERT-SCAN " drop
+        update @rate6 { ip6 saddr limit rate over 5/second burst 10 packets } add @scanners6 { ip6 saddr } log group 1 prefix "NETALERT-SCAN " drop
+
+        # Below threshold: a single probe or a slow scan. Globally rate-limited logging.
+        limit rate 6/minute log group 1 prefix "NETALERT-PROBE "
+        drop
+    }
+
+    chain ping {
+        limit rate 6/minute log group 1 prefix "NETALERT-PING "
+        drop
+    }
+
+    chain stealth {
+        limit rate 6/minute log group 1 prefix "NETALERT-STEALTH "
+        drop
+    }
+
+    chain forward {
+        type filter hook forward priority filter; policy drop;
+    }
+}

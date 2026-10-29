@@ -27,10 +27,12 @@ dev-db/dbeaver-bin
 dev-java/icedtea-web
 dev-java/openjdk-bin:21
 dev-lang/go
+dev-qt/qtwayland:6
 dev-util/intellij-idea
 dev-util/pahole
 dev-util/xxdiff
 dev-vcs/git
+kde-apps/dragon
 kde-apps/gwenview
 kde-apps/kdeadmin-meta
 kde-apps/kdeutils-meta
@@ -39,8 +41,12 @@ kde-plasma/plasma-meta
 media-gfx/gimp
 media-libs/libv4l
 media-libs/mesa
+media-plugins/obs-pipewire-audio-capture
 media-sound/alsa-utils
 media-sound/pavucontrol
+media-video/obs-studio
+media-video/v4l2loopback
+media-video/vlc
 net-analyzer/netselect
 net-im/discord
 net-irc/weechat

@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Full resolved absolute path (follows every link in the chain)
-readlink -f /usr/src/linux        # /usr/src/linux-7.2.10-gentoo
+target=$(readlink -f /usr/src/linux)        # /usr/src/linux-7.2.10-gentoo
 
 # Just the version part
 # 7.2.10-gentoo
-TARGET_KERNEL=${target#linux-}
+TARGET_KERNEL=$(echo $target | cut -d'-' -f2)
 
-echo "Generating initramfs for kernel $TARGET_KERNEL" 
+echo "Generating initramfs for kernel $TARGET_KERNEL-gentoo" 
 cd /usr/src/initramfs
-find . | cpio -o -H newc | gzip > /boot/initramfs-$TARGET_KERNEL.img
+find . | cpio -o -H newc | gzip > /boot/initramfs-$TARGET_KERNEL-gentoo.img
 echo "Generated initramfs"
 
 echo "Updating grub"
