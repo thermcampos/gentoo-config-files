@@ -1,6 +1,7 @@
 app-admin/sysklogd
 app-arch/cpio
 app-arch/zip
+app-backup/restic
 app-containers/docker
 app-containers/docker-buildx
 app-containers/docker-cli
@@ -14,6 +15,7 @@ app-misc/evtest
 app-misc/jq
 app-misc/neofetch
 app-misc/resolve-march-native
+app-misc/tmux
 app-pda/ifuse
 app-pda/usbmuxd
 app-portage/cfg-update
@@ -23,6 +25,7 @@ app-shells/bash-completion
 app-text/dos2unix
 app-text/pastebinit
 app-text/tree
+dev-build/meson-format-array
 dev-db/dbeaver-bin
 dev-java/icedtea-web
 dev-java/openjdk-bin:21
@@ -39,6 +42,7 @@ kde-apps/kdeutils-meta
 kde-plasma/discover
 kde-plasma/plasma-meta
 media-gfx/gimp
+media-gfx/imagemagick
 media-libs/libv4l
 media-libs/mesa
 media-plugins/obs-pipewire-audio-capture
@@ -48,10 +52,12 @@ media-video/obs-studio
 media-video/v4l2loopback
 media-video/vlc
 net-analyzer/netselect
+net-dns/bind
 net-im/discord
 net-irc/weechat
 net-misc/netifrc
 net-misc/networkmanager
+net-vpn/tailscale
 net-wireless/blueman
 net-wireless/iw
 sys-apps/busybox
