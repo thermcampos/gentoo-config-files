@@ -39,8 +39,10 @@ kde-apps/dragon
 kde-apps/gwenview
 kde-apps/kdeadmin-meta
 kde-apps/kdeutils-meta
+kde-apps/krfb
 kde-plasma/discover
 kde-plasma/plasma-meta
+kde-plasma/xdg-desktop-portal-kde
 media-gfx/gimp
 media-gfx/imagemagick
 media-libs/libv4l
@@ -63,6 +65,7 @@ net-wireless/iw
 sys-apps/busybox
 sys-apps/mlocate
 sys-apps/usbutils
+sys-apps/xdg-desktop-portal
 sys-apps/yarn
 sys-auth/polkit
 sys-cluster/kubectl
